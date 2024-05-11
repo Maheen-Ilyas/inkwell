@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "954578971863",
+    "project_id": "inkwell-ab750",
+    "storage_bucket": "inkwell-ab750.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954578971863:android:09441256fa88be9f595492",
+        "android_client_info": {
+          "package_name": "com.example.inkwell"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlDonTSnVDSCtBVqWuCkFj0jiUw-Vh2Do"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
