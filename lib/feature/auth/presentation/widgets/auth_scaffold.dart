@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:inkwell/core/routes/routes.dart';
-import 'package:inkwell/core/theme/app_colors.dart';
 
 class AuthScaffold extends StatelessWidget {
   final Widget widget;
   final bool showAppBar;
+  final Widget? appBar;
   const AuthScaffold({
     super.key,
     required this.widget,
     this.showAppBar = true,
+    this.appBar,
   });
 
   @override
@@ -23,34 +23,7 @@ class AuthScaffold extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
           ),
-          if (showAppBar)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                leading: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(appOnBoardingRoute);
-                  },
-                  child: const Icon(
-                    Icons.chevron_left,
-                    color: AppColors.primaryColor,
-                    size: 40.0,
-                  ),
-                ),
-                title: const Text(
-                  "Back",
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
+          if (showAppBar) appBar!,
           SafeArea(
             child: Column(
               children: [

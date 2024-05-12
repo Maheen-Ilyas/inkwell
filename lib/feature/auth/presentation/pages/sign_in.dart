@@ -30,6 +30,33 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     // _formKey.currentState!.validate();
     return AuthScaffold(
+      appBar: Positioned(
+        top: 0,
+        left: 0,
+        right: 0,
+        child: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(appOnBoardingRoute);
+            },
+            child: const Icon(
+              Icons.chevron_left,
+              color: AppColors.primaryColor,
+              size: 40.0,
+            ),
+          ),
+          title: const Text(
+            "Back",
+            style: TextStyle(
+              color: AppColors.primaryColor,
+              fontSize: 24.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
       widget: Expanded(
         child: Container(
           width: double.infinity,
