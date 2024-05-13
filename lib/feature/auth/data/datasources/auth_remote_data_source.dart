@@ -1,33 +1,34 @@
 import 'package:inkwell/core/error/exceptions.dart';
+import 'package:inkwell/feature/auth/data/models/profile_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<String> signUpWithEmailPassword({
+  Future<ProfileModel> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
   });
 
-  Future<String> signInWithEmailPassword({
+  Future<ProfileModel> signInWithEmailPassword({
     required String email,
     required String password,
   });
 
-  Future<String> googleSignUp();
+  Future<ProfileModel> googleSignUp();
 
-  Future<String> googleSignIn();
+  Future<ProfileModel> googleSignIn();
 
-  Future<String> facebookSignUp();
+  Future<ProfileModel> facebookSignUp();
 
-  Future<String> facebookSignIn();
+  Future<ProfileModel> facebookSignIn();
 
-  Future<String> appleSignUp();
+  Future<ProfileModel> appleSignUp();
 
-  Future<String> appleSignIn();
+  Future<ProfileModel> appleSignIn();
 
-  Future<String> twitterSignUp();
+  Future<ProfileModel> twitterSignUp();
 
-  Future<String> twitterSignIn();
+  Future<ProfileModel> twitterSignIn();
 }
 
 class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
@@ -37,43 +38,43 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
   AuthRemoteDataSourceImplementation(this.client);
 
   @override
-  Future<String> appleSignIn() {
+  Future<ProfileModel> appleSignIn() {
     // TODO: implement appleSignIn
     throw UnimplementedError();
   }
 
   @override
-  Future<String> appleSignUp() {
+  Future<ProfileModel> appleSignUp() {
     // TODO: implement appleSignUp
     throw UnimplementedError();
   }
 
   @override
-  Future<String> facebookSignIn() {
+  Future<ProfileModel> facebookSignIn() {
     // TODO: implement facebookSignIn
     throw UnimplementedError();
   }
 
   @override
-  Future<String> facebookSignUp() {
+  Future<ProfileModel> facebookSignUp() {
     // TODO: implement facebookSignUp
     throw UnimplementedError();
   }
 
   @override
-  Future<String> googleSignIn() {
+  Future<ProfileModel> googleSignIn() {
     // TODO: implement googleSignIn
     throw UnimplementedError();
   }
 
   @override
-  Future<String> googleSignUp() {
+  Future<ProfileModel> googleSignUp() {
     // TODO: implement googleSignUp
     throw UnimplementedError();
   }
 
   @override
-  Future<String> signInWithEmailPassword({
+  Future<ProfileModel> signInWithEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -82,14 +83,14 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
         email: email,
         password: password,
       );
-      return response.user!.id;
+      return ProfileModel.fromJson(response.user!.toJson());
     } catch (_) {
       throw ServerException(_.toString());
     }
   }
 
   @override
-  Future<String> signUpWithEmailPassword({
+  Future<ProfileModel> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
@@ -105,20 +106,20 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource {
       if (response.user == null) {
         throw ServerException('User could not be created. Try again.');
       }
-      return response.user!.id;
+      return ProfileModel.fromJson(response.user!.toJson());
     } catch (_) {
       throw ServerException(_.toString());
     }
   }
 
   @override
-  Future<String> twitterSignIn() {
+  Future<ProfileModel> twitterSignIn() {
     // TODO: implement twitterSignIn
     throw UnimplementedError();
   }
 
   @override
-  Future<String> twitterSignUp() {
+  Future<ProfileModel> twitterSignUp() {
     // TODO: implement twitterSignUp
     throw UnimplementedError();
   }

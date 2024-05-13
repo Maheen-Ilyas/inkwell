@@ -1,13 +1,14 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:inkwell/core/error/failure.dart';
 import 'package:inkwell/core/usecase/usecase.dart';
+import 'package:inkwell/feature/auth/domain/entities/profile.dart';
 import 'package:inkwell/feature/auth/domain/repository/auth_repository.dart';
 
-class UserSignUp implements UseCase<String, UserSignUpParams> {
+class UserSignUp implements UseCase<Profile, UserSignUpParams> {
   final AuthRepository repository;
   UserSignUp(this.repository);
   @override
-  Future<Either<Failure, String>> call(UserSignUpParams params) async {
+  Future<Either<Failure, Profile>> call(UserSignUpParams params) async {
     return await repository.signUpWithEmailPassword(
       name: params.name,
       email: params.email,

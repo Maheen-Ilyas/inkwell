@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkwell/core/theme/app_colors.dart';
 import 'package:inkwell/core/routes/routes.dart';
+import 'package:inkwell/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_button.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_field.dart';
+import 'package:inkwell/feature/auth/presentation/widgets/auth_navigation_text.dart';
+import 'package:inkwell/feature/auth/presentation/widgets/auth_options.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_scaffold.dart';
+import 'package:inkwell/feature/auth/presentation/widgets/auth_separator.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -104,109 +108,46 @@ class _SignUpState extends State<SignUp> {
                           hintText: 'Password',
                         ),
                         const SizedBox(height: 20.0),
-                        const AuthButton(
+                        AuthButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<AuthBloc>().add(
+                                    AuthSignUp(
+                                      name: _name.text.trim(),
+                                      email: _email.text.trim(),
+                                      password: _password.text.trim(),
+                                    ),
+                                  );
+                            }
+                          },
                           buttonText: 'Sign up',
                         ),
                         const SizedBox(height: 20.0),
-                        const Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                thickness: 1.0,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 0,
-                                horizontal: 10.0,
-                              ),
-                              child: Text(
-                                "Sign up with",
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                thickness: 1.0,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                          ],
+                        const AuthSeparator(
+                          dividerText: "Sign up with",
                         ),
                         const SizedBox(height: 20.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // TODO: Enable Google Sign up
-                              },
-                              child: Brand(
-                                Brands.google,
-                                size: 52.0,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // TODO: Enable Apple Sign in
-                              },
-                              child: const Icon(
-                                BoxIcons.bxl_apple,
-                                size: 52.0,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // TODO: Enable Twitter Sign in
-                              },
-                              child: Brand(
-                                Brands.twitter,
-                                size: 52.0,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // TODO: Enable Facebook Sign in
-                              },
-                              child: Brand(
-                                Brands.facebook,
-                                size: 52.0,
-                              ),
-                            ),
-                          ],
+                        AuthOptions(
+                          googleOnTap: () {
+                            // TODO: Google Sign up
+                          },
+                          appleOnTap: () {
+                            // TODO: Apple Sign up
+                          },
+                          twitterOnTap: () {
+                            // TODO: Twitter Sign up
+                          },
+                          facebookOnTap: () {
+                            // TODO: Facebook Sign up
+                          },
                         ),
                         const SizedBox(height: 20.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Already have an account?",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(width: 3.0),
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(signInRoute);
-                              },
-                              child: const Text(
-                                'Sign in here!',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryColor,
-                                ),
-                              ),
-                            ),
-                          ],
+                        AuthNavigationText(
+                          text: "Already have an account?",
+                          navigationText: 'Sign in here!',
+                          onTap: () {
+                            Navigator.of(context).pushNamed(signInRoute);
+                          },
                         ),
                       ],
                     ),

@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkwell/app.dart';
-import 'package:inkwell/core/secrets/app_secrets.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:inkwell/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:inkwell/init_dependencies.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(
-    url: AppSecrets.url,
-    anonKey: AppSecrets.anonKey,
+  await initDependencies();
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => serviceLocator<AuthBloc>(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
   );
-  runApp(const MyApp());
 }

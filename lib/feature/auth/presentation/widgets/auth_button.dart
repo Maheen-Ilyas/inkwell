@@ -3,9 +3,11 @@ import 'package:inkwell/core/theme/app_colors.dart';
 
 class AuthButton extends StatelessWidget {
   final String buttonText;
+  final VoidCallback onPressed;
   const AuthButton({
     super.key,
     required this.buttonText,
+    required this.onPressed,
   });
 
   @override
@@ -13,9 +15,7 @@ class AuthButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          // TODO: Sign up logic
-        },
+        onPressed: onPressed,
         style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(
             AppColors.secondaryColor,
