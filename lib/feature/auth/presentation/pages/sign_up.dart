@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inkwell/core/common/widgets/loading.dart';
 import 'package:inkwell/core/theme/app_colors.dart';
 import 'package:inkwell/core/routes/routes.dart';
+import 'package:inkwell/core/utils/snack_bar.dart';
 import 'package:inkwell/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_button.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_field.dart';
@@ -86,71 +88,86 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   const SizedBox(height: 30.0),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        AuthField(
-                          controller: _name,
-                          obscureText: false,
-                          hintText: 'Name',
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthFailure) {
+                        showSnackBar(
+                          context,
+                          state.message,
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is AuthLoading) {
+                        const Loading();
+                      }
+                      return Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            AuthField(
+                              controller: _name,
+                              obscureText: false,
+                              hintText: 'Name',
+                            ),
+                            const SizedBox(height: 20.0),
+                            AuthField(
+                              controller: _email,
+                              obscureText: false,
+                              hintText: 'Email',
+                            ),
+                            const SizedBox(height: 20.0),
+                            AuthField(
+                              controller: _password,
+                              obscureText: true,
+                              hintText: 'Password',
+                            ),
+                            const SizedBox(height: 20.0),
+                            AuthButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<AuthBloc>().add(
+                                        AuthSignUp(
+                                          name: _name.text.trim(),
+                                          email: _email.text.trim(),
+                                          password: _password.text.trim(),
+                                        ),
+                                      );
+                                }
+                              },
+                              buttonText: 'Sign up',
+                            ),
+                            const SizedBox(height: 20.0),
+                            const AuthSeparator(
+                              dividerText: "Sign up with",
+                            ),
+                            const SizedBox(height: 20.0),
+                            AuthOptions(
+                              googleOnTap: () {
+                                // TODO: Google Sign up
+                              },
+                              appleOnTap: () {
+                                // TODO: Apple Sign up
+                              },
+                              twitterOnTap: () {
+                                // TODO: Twitter Sign up
+                              },
+                              facebookOnTap: () {
+                                // TODO: Facebook Sign up
+                              },
+                            ),
+                            const SizedBox(height: 20.0),
+                            AuthNavigationText(
+                              text: "Already have an account?",
+                              navigationText: 'Sign in here!',
+                              onTap: () {
+                                Navigator.of(context).pushNamed(signInRoute);
+                              },
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 20.0),
-                        AuthField(
-                          controller: _email,
-                          obscureText: false,
-                          hintText: 'Email',
-                        ),
-                        const SizedBox(height: 20.0),
-                        AuthField(
-                          controller: _password,
-                          obscureText: true,
-                          hintText: 'Password',
-                        ),
-                        const SizedBox(height: 20.0),
-                        AuthButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<AuthBloc>().add(
-                                    AuthSignUp(
-                                      name: _name.text.trim(),
-                                      email: _email.text.trim(),
-                                      password: _password.text.trim(),
-                                    ),
-                                  );
-                            }
-                          },
-                          buttonText: 'Sign up',
-                        ),
-                        const SizedBox(height: 20.0),
-                        const AuthSeparator(
-                          dividerText: "Sign up with",
-                        ),
-                        const SizedBox(height: 20.0),
-                        AuthOptions(
-                          googleOnTap: () {
-                            // TODO: Google Sign up
-                          },
-                          appleOnTap: () {
-                            // TODO: Apple Sign up
-                          },
-                          twitterOnTap: () {
-                            // TODO: Twitter Sign up
-                          },
-                          facebookOnTap: () {
-                            // TODO: Facebook Sign up
-                          },
-                        ),
-                        const SizedBox(height: 20.0),
-                        AuthNavigationText(
-                          text: "Already have an account?",
-                          navigationText: 'Sign in here!',
-                          onTap: () {
-                            Navigator.of(context).pushNamed(signInRoute);
-                          },
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),

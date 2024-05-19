@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inkwell/core/theme/app_colors.dart';
 import 'package:inkwell/core/routes/routes.dart';
+import 'package:inkwell/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_button.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_field.dart';
 import 'package:inkwell/feature/auth/presentation/widgets/auth_navigation_text.dart';
@@ -100,7 +102,12 @@ class _SignInState extends State<SignIn> {
                         AuthButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              // context.read<AuthBloc>().add(AuthSignIn)
+                              context.read<AuthBloc>().add(
+                                    AuthSignIn(
+                                      email: _email.text.trim(),
+                                      password: _password.text.trim(),
+                                    ),
+                                  );
                             }
                           },
                           buttonText: 'Sign in',
